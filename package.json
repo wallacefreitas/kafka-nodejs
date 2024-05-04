@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only --env-file ../.env  src/main.ts"
+    "dev": "tsnd --respawn --transpile-only --env-file .env src/main.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.12.8",
+    "env-var": "^7.4.1",
     "kafkajs": "^2.2.4",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"

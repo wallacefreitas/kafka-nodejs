@@ -8,6 +8,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.12.8
     version: 20.12.8
+  env-var:
+    specifier: ^7.4.1
+    version: 7.4.1
   kafkajs:
     specifier: ^2.2.4
     version: 2.2.4
@@ -155,6 +158,11 @@ packages:
     resolution: {integrity: sha512-ssuANeD+z97meYOqd50e04Ze5qp4bPqo8cCkI4TRjZkzAUgIDTrXV1R8QCdINpiI+hw14+rYazvTRdQrz0/rFQ==}
     dependencies:
       xtend: 4.0.2
+    dev: true
+
+  /env-var@7.4.1:
+    resolution: {integrity: sha512-H8Ga2SbXTQwt6MKEawWSvmxoH1+J6bnAXkuyE7eDvbGmrhIL2i+XGjzGM3DFHcJu8GY1zY9/AnBJY8uGQYPHiw==}
+    engines: {node: '>=10'}
     dev: true
 
   /fill-range@7.0.1:
