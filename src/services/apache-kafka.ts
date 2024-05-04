@@ -1,4 +1,5 @@
 import { Consumer, Kafka, Partitioners } from 'kafkajs'
+import env from 'env-var'
 import { allOrders } from '../shared';
 
 export class ApacheKafkaService {
@@ -8,7 +9,7 @@ export class ApacheKafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: 'orders-events-processor',
-      brokers: ['localhost:9092'],
+      brokers: [env.get('KAFKA_BROKER_URL').required().asUrlString()],
     })
 
     this.consumer = this.kafka.consumer({ 
