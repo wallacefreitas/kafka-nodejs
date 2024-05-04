@@ -41,6 +41,7 @@ export class ApacheKafkaService {
   
     await this.consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
+        //Simulate a persistence in database or another resource of storing
         allOrders.push(JSON.parse(message.value?.toString() || ''))
         allOrders.map((order) => console.log(order));
       }
