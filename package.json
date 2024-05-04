@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc --noEmit && tsx watch ./src/main.ts"
+    "dev": "tsnd --respawn --transpile-only --env-file ../.env  src/main.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +12,7 @@
   "devDependencies": {
     "@types/node": "^20.12.8",
     "kafkajs": "^2.2.4",
-    "tsx": "^4.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
   }
 }
