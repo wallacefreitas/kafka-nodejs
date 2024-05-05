@@ -1,6 +1,5 @@
-import { Consumer, Kafka, Partitioners } from 'kafkajs'
+import { CompressionTypes, Consumer, Kafka, Partitioners } from 'kafkajs'
 import env from 'env-var'
-import { allOrders } from '../shared';
 
 export class ApacheKafkaService {
   private kafka: Kafka;
@@ -9,7 +8,7 @@ export class ApacheKafkaService {
   constructor() {
     this.kafka = new Kafka({
       clientId: 'orders-events-processor',
-      brokers: [env.get('KAFKA_BROKER_URL').required().asUrlString()],
+      brokers: [env.get('KAFKA_BROKER_URL').required().asUrlString()]
     })
 
     this.consumer = this.kafka.consumer({ 
@@ -20,7 +19,7 @@ export class ApacheKafkaService {
   public async createTopic(topic: string, numPartitions: number) {
     const admin = this.kafka.admin();
 
-    admin.connect();
+    await admin.connect();
     await admin.createTopics({
       topics: [
         {
@@ -29,8 +28,8 @@ export class ApacheKafkaService {
         },
       ],
     });
-
-    console.log("Topic Created Success " + topic);
+    
+    await admin.disconnect()
   }
 
   public async produce(topic: string, message: object) {
@@ -42,14 +41,15 @@ export class ApacheKafkaService {
     await producer.send({
       topic,
       messages: [
-        { value: JSON.stringify(message) }
-      ]
+        { key: "order", value: JSON.stringify(message) }
+      ],
+      compression: CompressionTypes.GZIP
     });
     
     await producer.disconnect();
   } 
 
-  public async consume(topic: string) {
+  public async consume(topic: string, callback: Function) {
     await this.consumer.connect();
     await this.consumer.subscribe({
       topic,
@@ -59,7 +59,7 @@ export class ApacheKafkaService {
     await this.consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
         //Simulate a persistence in database or another resource of storing
-        allOrders.push(JSON.parse(message.value?.toString() || ''))
+        callback(message.value?.toString());
       }
     })
   }
