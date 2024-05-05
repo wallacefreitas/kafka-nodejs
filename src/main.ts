@@ -7,6 +7,11 @@ const ordersSenior = getOrdersSenior();
 
 const apacheKafkaService = new ApacheKafkaService();
 
+//Creating topics
+apacheKafkaService.createTopic('topic-orders-crm', 1);
+apacheKafkaService.createTopic('topic-orders-salesforce', 1);
+apacheKafkaService.createTopic('topic-orders-senior', 1);
+
 //Producing messages of each Sales Platform
 apacheKafkaService.produce('topic-orders-crm', ordersCRM);
 apacheKafkaService.produce('topic-orders-salesforce', ordersSalesForce);

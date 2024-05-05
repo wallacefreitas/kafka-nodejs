@@ -17,6 +17,22 @@ export class ApacheKafkaService {
     })
   }
 
+  public async createTopic(topic: string, numPartitions: number) {
+    const admin = this.kafka.admin();
+
+    admin.connect();
+    await admin.createTopics({
+      topics: [
+        {
+          topic,
+          numPartitions,
+        },
+      ],
+    });
+
+    console.log("Topic Created Success " + topic);
+  }
+
   public async produce(topic: string, message: object) {
     const producer = this.kafka.producer({
       createPartitioner: Partitioners.LegacyPartitioner
@@ -44,7 +60,6 @@ export class ApacheKafkaService {
       eachMessage: async ({ topic, partition, message }) => {
         //Simulate a persistence in database or another resource of storing
         allOrders.push(JSON.parse(message.value?.toString() || ''))
-        allOrders.map((order) => console.log(order));
       }
     })
   }
