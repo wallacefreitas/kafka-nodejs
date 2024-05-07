@@ -58,7 +58,6 @@ export class ApacheKafkaService {
   
     await this.consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
-        //Simulate a persistence in database or another resource of storing
         callback(message.value?.toString());
       }
     })
