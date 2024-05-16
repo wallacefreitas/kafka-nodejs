@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { ApacheKafkaService } from "./services/apache-kafka";
 import { consumeOrdersEvent } from "./events/orders-event";
 import { connectMongooseDB } from "./database/mongoose";
